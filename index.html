@@ -80,51 +80,26 @@
 </div>
 
 <script>
-const OWNER = "kamilyilmazbou-bot";
-const REPO  = "teleport";
-const FILE  = "commands.json";
-const BRANCH = "main";
-
-/*
-⚠️ BURAYA GITHUB TOKEN GELECEK
-(Repo → Settings → Developer settings → Tokens)
-*/
-const TOKEN = "GITHUB_TOKEN_BURAYA";
-
 async function send(index) {
-  const headers = {
-    Authorization: `token ${TOKEN}`,
-    "Content-Type": "application/json"
-  };
+  try {
+    const res = await fetch("/.netlify/functions/go", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ index })
+    });
 
-  // 1️⃣ Dosyayı çek
-  const res = await fetch(
-    `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE}`,
-    { headers }
-  );
+    const data = await res.json();
 
-  const data = await res.json();
-  const content = JSON.parse(atob(data.content));
-
-  // 2️⃣ Buton tetikle
-  content.buttons[index].go = 1;
-
-  // 3️⃣ Geri yaz
-  await fetch(
-    `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE}`,
-    {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({
-        message: `Trigger TP ${index + 1}`,
-        content: btoa(JSON.stringify(content, null, 2)),
-        sha: data.sha,
-        branch: BRANCH
-      })
+    if (data.ok) {
+      alert(`TP ${index + 1} gönderildi`);
+    } else {
+      alert("Hata: " + data.error);
     }
-  );
-
-  alert(`TP ${index + 1} gönderildi`);
+  } catch (e) {
+    alert("Bağlantı hatası");
+  }
 }
 </script>
 
