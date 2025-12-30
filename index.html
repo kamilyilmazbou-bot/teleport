@@ -1,65 +1,53 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teleport Panel</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #0f172a;
-      color: #fff;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       margin: 0;
     }
-
     .container {
+      max-width: 400px;
       width: 100%;
-      max-width: 420px;
       padding: 20px;
     }
-
     h1 {
       text-align: center;
       margin-bottom: 20px;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
-
     button {
-      padding: 20px;
+      padding: 18px;
       font-size: 18px;
       font-weight: bold;
-      background: #22c55e;
-      border: none;
       border-radius: 10px;
+      border: none;
       cursor: pointer;
-      color: #000;
+      background: #22c55e;
+      color: black;
     }
-
     button:active {
+      transform: scale(0.96);
       background: #16a34a;
-      transform: scale(0.97);
-    }
-
-    .info {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      opacity: 0.8;
     }
   </style>
 </head>
-<body>
 
+<body>
 <div class="container">
   <h1>🚀 Teleport Panel</h1>
 
@@ -72,10 +60,6 @@
     <button onclick="send(5)">TP 6</button>
     <button onclick="send(6)">TP 7</button>
     <button onclick="send(7)">TP 8</button>
-  </div>
-
-  <div class="info">
-    Butona bas → PC’de tık + 2
   </div>
 </div>
 
@@ -91,14 +75,9 @@ async function send(index) {
     });
 
     const data = await res.json();
-
-    if (data.ok) {
-      alert(`TP ${index + 1} gönderildi`);
-    } else {
-      alert("Hata: " + data.error);
-    }
+    alert("TP gönderildi ✔️");
   } catch (e) {
-    alert("Bağlantı hatası");
+    alert("Hata: " + e.message);
   }
 }
 </script>
