@@ -65,22 +65,16 @@
 
 <script>
 async function send(index) {
-  try {
-    const res = await fetch("/.netlify/functions/go", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ index })
-    });
+  await fetch("/api/go", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ index })
+  });
 
-    const data = await res.json();
-    alert("TP gönderildi ✔️");
-  } catch (e) {
-    alert("Hata: " + e.message);
-  }
+  alert("Gönderildi");
 }
 </script>
+
 
 </body>
 </html>
