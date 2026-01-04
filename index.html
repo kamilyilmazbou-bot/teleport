@@ -25,10 +25,10 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    .buttons {
+      display: flex;
+      flex-direction: column; /* alt alta sıralamak için */
+      gap: 12px; /* butonlar arası boşluk */
     }
     button {
       padding: 18px;
@@ -38,7 +38,7 @@
       border: none;
       cursor: pointer;
       background: #22c55e;
-      color: black;
+      color: white; /* yazı beyaz */
     }
     button:active {
       transform: scale(0.96);
@@ -48,33 +48,31 @@
 </head>
 
 <body>
-<div class="container">
-  <h1>🚀 Teleport Panel</h1>
+  <div class="container">
+    <h1>🚀 Teleport Panel</h1>
 
-  <div class="grid">
-    <button onclick="send(0)">TP x34</button>
-    <button onclick="send(1)">TP Kharoon</button>
-    <button onclick="send(2)">TP Xoi</button>
-    <button onclick="send(3)">TP Dimmi/Woi</button>
-    <button onclick="send(4)">TP Tosun/Domper</button>
-    <button onclick="send(5)">TP Ahmo</button>
-    <button onclick="send(6)">TP Dangerousss</button>
-    <button onclick="send(7)">TP 8</button>
+    <div class="buttons">
+      <button onclick="send(0)">TP x34</button>
+      <button onclick="send(1)">TP Kharoon</button>
+      <button onclick="send(2)">TP Xoi</button>
+      <button onclick="send(3)">TP Dimmi/Woi</button>
+      <button onclick="send(4)">TP Tosun/Domper</button>
+      <button onclick="send(5)">TP Ahmo</button>
+      <button onclick="send(6)">TP Dangerousss</button>
+      <button onclick="send(7)">TP 8</button>
+    </div>
   </div>
-</div>
 
-<script>
-async function send(index) {
-  await fetch("/api/go", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ index })
-  });
+  <script>
+    async function send(index) {
+      await fetch("/api/go", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ index })
+      });
 
-  alert("Gönderildi");
-}
-</script>
-
-
+      alert("Gönderildi");
+    }
+  </script>
 </body>
 </html>
