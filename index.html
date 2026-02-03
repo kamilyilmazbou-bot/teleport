@@ -9,7 +9,7 @@
     body {
       font-family: Arial, sans-serif;
       background: #0f172a;
-      color: #f3f4f6; /* göz yormayan açık krem */
+      color: #f3f4f6;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,12 +24,12 @@
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      color: #f3f4f6; /* başlık rengi */
+      color: #f3f4f6;
     }
     .buttons {
       display: flex;
-      flex-direction: column; /* alt alta sıralamak için */
-      gap: 12px; /* butonlar arası boşluk */
+      flex-direction: column;
+      gap: 12px;
     }
     button {
       padding: 18px;
@@ -39,11 +39,11 @@
       border: none;
       cursor: pointer;
       background: #22c55e;
-      color: #0f172a; /* yazı rengi koyu, göz yormaz */
+      color: #0f172a;
       transition: background 0.2s, transform 0.1s;
     }
     button:hover {
-      background: #16a34a; /* hover efekti */
+      background: #16a34a;
     }
     button:active {
       transform: scale(0.96);
@@ -95,9 +95,13 @@
       alert("Gönderildi");
     }
 
-    // 🔹 Town At fonksiyonu 🔹
+    // 🔹 Town At fonksiyonu artık go.js ile aynı endpointi kullanıyor 🔹
     async function townAt() {
-      await fetch("/api/town", { method: "POST" });
+      await fetch("/api/go", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ town: true }) // town parametresi gönderiyoruz
+      });
       alert("Town At komutu gönderildi!");
     }
   </script>
