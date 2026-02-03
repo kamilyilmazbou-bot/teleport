@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { index, town } = req.body; // town parametresi ekledik
+  const { index, town } = req.body;
   const token = process.env.GITHUB_TOKEN;
 
   const API_URL =
@@ -22,8 +22,9 @@ export default async function handler(req, res) {
   const json = await raw.json();
 
   if (town) {
-    // 🔹 Town At tetikle
+    // Town At tetikle
     json.town.trigger = Date.now();
+
     await fetch(API_URL, {
       method: "PUT",
       headers,
@@ -34,6 +35,7 @@ export default async function handler(req, res) {
         branch: "main"
       })
     });
+
     res.json({ ok: true });
     return;
   }
