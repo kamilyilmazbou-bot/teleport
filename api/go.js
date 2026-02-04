@@ -17,50 +17,39 @@ export default async function handler(req, res) {
   const shaRes = await fetch(API_URL, { headers });
   const shaJson = await shaRes.json();
 
-  // JSON oku
+  // JSON al
   const raw = await fetch(RAW_URL);
   const json = await raw.json();
 
-  // ================= TOWN AT =================
+  // 🔥 TOWN AT
   if (town) {
-    json.last_action = "town";
-
-    // 🔥 SADECE town tetiklensin
     json.town.trigger = Date.now();
-
-    // 🔥 Mage tetiklerini sıfırla
-    json.buttons.forEach(b => (b.trigger = 0));
+    json.last_action = "town";
 
     await fetch(API_URL, {
       method: "PUT",
       headers,
       body: JSON.stringify({
-        message: `TRIGGER TOWN`,
+        message: "TRIGGER TOWN",
         content: Buffer.from(JSON.stringify(json, null, 2)).toString("base64"),
         sha: shaJson.sha,
         branch: "main"
       })
     });
 
-    return res.json({ ok: true });
+    res.json({ ok: true });
+    return;
   }
 
-  // ================= MAGE TP =================
+  // 🔥 MAGE TP (1–8)
+  json.buttons[index].trigger = Date.now();
   json.last_action = "mage";
-
-  // 🔥 SADECE bu index tetiklensin
-  json.buttons.forEach((b, i) => {
-    b.trigger = i === index ? Date.now() : 0;
-  });
-
-  // 🔥 Town tetik sıfırla
-  json.town.trigger = 0;
 
   await fetch(API_URL, {
     method: "PUT",
     headers,
     body: JSON.stringify({
-      message: `TRIGGER ${index}`,
+      message: `TRIGGER MAGE ${index}`,
       content: Buffer.from(JSON.stringify(json, null, 2)).toString("base64"),
       sha: shaJson.sha,
       branch: "main"
