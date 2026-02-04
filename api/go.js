@@ -1,6 +1,16 @@
+let lastFire = {}; // 🔥 in-memory debounce
+
 export default async function handler(req, res) {
-  const { index, town } = req.body;
+  const { index } = req.body;
   const token = process.env.GITHUB_TOKEN;
+
+  const now = Date.now();
+
+  // 🔒 AYNI BUTON 1 SN İÇİNDE TEKRAR GELİRSE YOK SAY
+  if (lastFire[index] && now - lastFire[index] < 1000) {
+    return res.json({ ok: true, ignored: true });
+  }
+  lastFire[index] = now;
 
   const API_URL =
     "https://api.github.com/repos/kamilyilmazbou-bot/teleport/contents/commands.json";
@@ -21,28 +31,8 @@ export default async function handler(req, res) {
   const raw = await fetch(RAW_URL);
   const json = await raw.json();
 
-  // 🔥 TOWN AT
-  if (town) {
-    json.town.trigger = Date.now();
-    json.last_action = "town";
-
-    await fetch(API_URL, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({
-        message: "TRIGGER TOWN",
-        content: Buffer.from(JSON.stringify(json, null, 2)).toString("base64"),
-        sha: shaJson.sha,
-        branch: "main"
-      })
-    });
-
-    res.json({ ok: true });
-    return;
-  }
-
-  // 🔥 MAGE TP (1–8)
-  json.buttons[index].trigger = Date.now();
+  // 🔥 SADECE MAGE
+  json.buttons[index].trigger = now;
   json.last_action = "mage";
 
   await fetch(API_URL, {
