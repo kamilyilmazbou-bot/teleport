@@ -49,19 +49,6 @@
       transform: scale(0.96);
       background: #15803d;
     }
-
-    /* Town At Butonu */
-    .town-btn {
-      background: #ec4899;
-      color: #f3f4f6;
-    }
-    .town-btn:hover {
-      background: #db2777;
-    }
-    .town-btn:active {
-      background: #be185d;
-      transform: scale(0.96);
-    }
   </style>
 </head>
 
@@ -78,9 +65,6 @@
       <button onclick="send(5)">6. TP</button>
       <button onclick="send(6)">7. TP</button>
       <button onclick="send(7)">8. TP</button>
-
-      <!-- Town At -->
-      <button class="town-btn" onclick="townAt()">Town At</button>
     </div>
   </div>
 
@@ -93,16 +77,6 @@
       });
 
       alert("Gönderildi");
-    }
-
-    async function townAt() {
-      await fetch("/api/go", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ town: true }) // <-- artık go.js üzerinden tetikleniyor
-      });
-
-      alert("Town At komutu gönderildi!");
     }
   </script>
 </body>
